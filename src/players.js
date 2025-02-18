@@ -95,6 +95,23 @@ function Player({ player }) {
         }}
       >
         {player.name}
+          </div>
+          <div
+        style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'mixed',
+          backgroundColor: '#fff',
+          color: '#000',
+          padding: '20px 10px',
+          textAlign: 'center',
+          borderRadius: '0px 8px 0px 8px',
+          position: 'absolute',
+          right: '0',
+                  top: '0',
+          fontWeight: 'bold'
+        }}
+      >
+        {player.role}
       </div>
       {player.vpl && <Stats player={player} />}
     </div>
