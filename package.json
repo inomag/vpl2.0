@@ -2,7 +2,6 @@
   "name": "auction",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://inomag.github.io/vpl2.0",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
