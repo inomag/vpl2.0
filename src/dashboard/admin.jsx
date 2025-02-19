@@ -238,14 +238,14 @@ function Admin({ user, status, purse }) {
     >
       {currentPlayer && players?.length && (
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-          <Button
+          {user === 'admin' && <Button
             color="default"
             size="large"
             variant="solid"
             icon={<MinusOutlined />}
             shape="circle"
             onClick={handleDecrease}
-          />
+          />}
           <div
             style={{
               display: 'flex',
@@ -260,14 +260,14 @@ function Admin({ user, status, purse }) {
               {currentPlayer?.price}
             </span>
           </div>
-          <Button
+          {user === 'admin' && <Button
             color="default"
             size="large"
             variant="solid"
             icon={<PlusOutlined />}
             shape="circle"
             onClick={handleIncrease}
-          />
+          />}
         </div>
       )}
 
@@ -283,7 +283,7 @@ function Admin({ user, status, purse }) {
         }
       />
 
-      <div style={{ display: 'flex', gap: '8px' }}>
+      {user === 'admin' && <div style={{ display: 'flex', gap: '8px' }}>
         {!currentPlayer ? (
           <Button color="default" variant="solid" onClick={handleStart}>
             Start
@@ -318,7 +318,7 @@ function Admin({ user, status, purse }) {
             Reset Auction
           </Button>
         </Popconfirm>
-      </div>
+      </div>}
     </div>
   );
 }
