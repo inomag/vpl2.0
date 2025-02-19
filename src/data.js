@@ -565,4 +565,9 @@ export const players = [
       team: 'warriors',
     },
   },
+  {
+    name: 'Shankar Itagi',
+    phone: '6304850851',
+    role: 'Batsman'
+  },
 ];
