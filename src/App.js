@@ -3,6 +3,7 @@ import { Card, Typography, Button } from 'antd';
 import { TeamOutlined, ControlOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import PlayerCards from './players';
 import Dashboard from './dashboard';
+import Roster from './roster';
 import cover from './cover.png';
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
       case 'dashboard':
         return <Dashboard />;
       case 'roster':
-        return 'Roster';
+        return <Roster />;
       default:
         return playerList;
     }
@@ -50,28 +51,7 @@ function App() {
           <Button variant="solid" shape="circle" icon={<UnorderedListOutlined />} size={'large'} onClick={() => setSelectedMenu('roster')} color='default'/>
 
       </div>
-      {/* <Menu
-      onClick={(e) => setSelectedMenu(e.key)}
-      style={{ width: 256, borderRadius: '16px', height: 'fit-content' }}
-        defaultSelectedKeys={[selectedMenu]}
-        theme='dark'
-      items={[
-  {
-    key: 'list',
-    label: 'Players List',
-  },
-  {
-    key: 'dashboard',
-    label: 'Auction Dashboard',
-  },
-  {
-    key: 'roster',
-    label: 'Current Roster',
-  },
-]}
-      /> */}
       {getChild()}
-
     </div>
   )
 }
