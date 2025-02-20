@@ -38,7 +38,7 @@ function Roster() {
       const rosterData = {};
       snapshot.forEach((doc) => {
         const playerData = doc.data();
-        rosterData[doc.id] = playerData.team; // Store as { playerId: team }
+        rosterData[doc.id] = {team: playerData.team, price: playerData.price}; // Store as { playerId: team }
       });
       setCurrentRoster(rosterData);
     });
@@ -49,7 +49,7 @@ function Roster() {
   }, []);
 
     const getData = (team) => {
-      return [...captains[team], ...(playersList || []).filter((player) => currentRoster[player.id] === team), ]
+      return [...captains[team], ...(playersList || []).filter((player) => currentRoster[player.id]?.team === team), ]
   };
 
   return (
@@ -60,7 +60,7 @@ function Roster() {
             display: 'flex',
             flexDirection: 'column',
             gap: '8px',
-            width: '300px',
+            width: '360px',
           }}
         >
           <div
@@ -77,16 +77,18 @@ function Roster() {
           >
             {team.name}
           </div>
-          {getData(team.code).map((item) => (
+              {getData(team.code).map((item) => (
+              <div style={{display: 'flex',                 padding: '8px 12px',                 borderRadius: '16px',                 alignItems: 'center',background: 'white',
+                justifyContent: 'space-between',
+                fontWeight: '600', gap: '12px'
+ }}>
             <div
               style={{
                 display: 'flex',
-                padding: '8px 12px',
-                borderRadius: '16px',
-                alignItems: 'center',
-                background: 'white',
-                justifyContent: 'space-between',
-                fontWeight: '600',
+                              alignItems: 'center', 
+                              justifyContent: 'space-between',
+                                flex: 1
+
               }}
             >
               <div
@@ -99,15 +101,21 @@ function Roster() {
                   }
                 />
                 <Typography>{item.name}</Typography>
-              </div>
+                  </div>
+                  
 
               <Typography>{item.role}</Typography>
-            </div>
+                      </div>
+                             {currentRoster?.[item.id]?.price && <Typography style={{background: 'gold', paddingInline: '4px', borderRadius: '4px'}}>{currentRoster?.[item.id]?.price}</Typography>    }
+
+                      </div>
           ))}
         </div>
       ))}
     </div>
   );
 }
+
+
 
 export default Roster;
