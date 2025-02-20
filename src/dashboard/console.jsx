@@ -110,7 +110,7 @@ function AuctionConsole({ user }) {
               padding: '16px',
               display: 'flex',
               alignItems: 'center',
-              gap: '32px',
+              gap: '20px',
               flexDirection: 'column',
             }}
           >
@@ -179,7 +179,7 @@ function AuctionConsole({ user }) {
               padding: '16px',
               display: 'flex',
               alignItems: 'center',
-              gap: '32px',
+              gap: '20px',
               flexDirection: 'column',
             }}
           >
@@ -277,7 +277,7 @@ function AuctionConsole({ user }) {
               padding: '16px',
               display: 'flex',
               alignItems: 'center',
-              gap: '32px',
+              gap: '20px',
               flexDirection: 'column',
             }}
           >
@@ -346,7 +346,7 @@ function AuctionConsole({ user }) {
               padding: '16px',
               display: 'flex',
               alignItems: 'center',
-              gap: '32px',
+              gap: '20px',
               flexDirection: 'column',
             }}
           >
