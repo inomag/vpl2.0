@@ -74,7 +74,7 @@ function Dashboard() {
       {isAuthenticated ? (
               <AuctionConsole user={name} />
       ) : (
-        <Card >
+        <Card style={{height: 'fit-content'}}>
           <h2>Login</h2>
           <Input
             placeholder="Name"
