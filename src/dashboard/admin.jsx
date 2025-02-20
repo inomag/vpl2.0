@@ -12,10 +12,12 @@ import {
   setDoc,
 } from 'firebase/firestore';
 
-function Admin({ user, status, purse }) {
+function Admin({ user, status, purse , roster}) {
   const [players, setPlayers] = useState([]);
   const [currentPlayer, setCurrentPlayer] = useState(null);
-  const [roster, setRoster] = useState({});
+
+  const availablePlayers =
+        (players || []).filter((player) => !roster?.[player.id] && !player.notAvailable) || [];
 
   useEffect(() => {
     const playerRef = doc(db, 'currentBid', 'player');
@@ -26,17 +28,6 @@ function Admin({ user, status, purse }) {
         setCurrentPlayer(null);
         console.warn('No such document!');
       }
-    });
-
-    const rosterRef = collection(db, 'roster');
-
-    // Listen to real-time updates in the roster collection
-    const unsubscribeRoster = onSnapshot(rosterRef, (snapshot) => {
-      const updatedRoster = {};
-      snapshot.docs.forEach((doc) => {
-        updatedRoster[doc.id] = doc.data().team;
-      });
-      setRoster(updatedRoster);
     });
 
     const fetchPlayers = async () => {
@@ -54,14 +45,10 @@ function Admin({ user, status, purse }) {
     fetchPlayers();
     return () => {
       unsubscribePlayer();
-      unsubscribeRoster();
     };
   }, []);
 
   const handleStart = async () => {
-    const availablePlayers =
-        players.filter((player) => !roster[player.id]) || [];
-      console.log(availablePlayers);
     if (availablePlayers.length > 0) {
       const randomPlayer =
         availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
@@ -236,6 +223,8 @@ function Admin({ user, status, purse }) {
         gap: '48px',
       }}
     >
+      <span style={{fontWeight: '700', fontSize:'40px'}}>{`Available Players: ${availablePlayers.length}`}</span>
+
       {currentPlayer && players?.length && (
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
           {user === 'admin' && <Button
@@ -283,7 +272,7 @@ function Admin({ user, status, purse }) {
         }
       />
 
-      {user === 'admin' && <div style={{ display: 'flex', gap: '8px' }}>
+      {user === 'admin' && availablePlayers.length > 0 && <div style={{ display: 'flex', gap: '8px' }}>
         {!currentPlayer ? (
           <Button color="default" variant="solid" onClick={handleStart}>
             Start

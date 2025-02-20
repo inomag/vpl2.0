@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'antd';
 import { db } from '../firebase';
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc, collection } from 'firebase/firestore';
 import Admin from './admin';
 
 function AuctionConsole({ user }) {
@@ -19,6 +19,9 @@ function AuctionConsole({ user }) {
         mavericks: 1000,
         titans: 1000
     })
+  
+    const [roster, setRoster] = useState({});
+
 
   // ✅ Real-time Firestore listener
   useEffect(() => {
@@ -38,12 +41,24 @@ function AuctionConsole({ user }) {
       } else {
         console.warn('No such document!');
       }
+      });
+    
+    const rosterRef = collection(db, 'roster');
+
+    // Listen to real-time updates in the roster collection
+    const unsubscribeRoster = onSnapshot(rosterRef, (snapshot) => {
+      const updatedRoster = {};
+      snapshot.docs.forEach((doc) => {
+        updatedRoster[doc.id] = doc.data().team;
+      });
+      setRoster(updatedRoster);
     });
 
     // ✅ Clean up listener on unmount
       return () => {
           unsubscribePurse();
-          unsubscribeStatus();
+        unsubscribeStatus();
+        unsubscribeRoster();
     };
   }, []);
 
@@ -61,6 +76,10 @@ function AuctionConsole({ user }) {
     }
   };
 
+  const selectedPlayers = (team) => 
+    Object.values(roster).filter((val) => val ===team).length || 0
+  
+
   return (
     <div
       style={{ width: '100%', height: '90%', padding: '24px', display: 'flex' }}
@@ -76,7 +95,7 @@ function AuctionConsole({ user }) {
       >
         <div
           style={{
-            height: '200px',
+            height: '280px',
             background: 'rgba(0, 0, 0, 0.88)',
             borderRadius: '16px',
             display: 'flex',
@@ -97,7 +116,11 @@ function AuctionConsole({ user }) {
           >
             <span style={{ fontWeight: '700', flex: '1', fontSize: '36px' }}>
               VYMO STRIKERS
-                      </span>
+            </span>
+            <span style={{ fontWeight: '600', flex: '1', fontSize: '24px', color: 'white' }}>
+               {`Team Size: 
+              ${selectedPlayers('strikers') + 2}`}
+            </span>
                       <span style={{ fontWeight: '500', flex: '1', fontSize: '24px', color: 'gold' }}>
               Remaining Purse: {purse.strikers}
             </span>
@@ -162,7 +185,11 @@ function AuctionConsole({ user }) {
           >
             <span style={{ fontWeight: '700', flex: '1', fontSize: '36px' }}>
               VYMO WARRIORS
-                      </span>
+            </span>
+            <span style={{ fontWeight: '600', flex: '1', fontSize: '24px', color: 'white' }}>
+               {`Team Size: 
+              ${selectedPlayers('warriors') + 2}`}
+            </span>
                       <span style={{ fontWeight: '500', flex: '1', fontSize: '24px', color: 'gold' }}>
               Remaining Purse: {purse.warriors}
             </span>
@@ -205,7 +232,7 @@ function AuctionConsole({ user }) {
         </div>
       </div>
 
-          <Admin user={user} status={status} purse={purse} />
+          <Admin user={user} status={status} purse={purse} roster={roster} />
 
       <div
         id="teamsB"
@@ -256,7 +283,11 @@ function AuctionConsole({ user }) {
           >
             <span style={{ fontWeight: '700', flex: '1', fontSize: '36px' }}>
               VYMO MAVERICKS
-                      </span>
+            </span>
+            <span style={{ fontWeight: '600', flex: '1', fontSize: '24px', color: 'white' }}>
+               {`Team Size: 
+              ${selectedPlayers('mavericks') + 2}`}
+            </span>
                       <span style={{ fontWeight: '500', flex: '1', fontSize: '24px', color: 'gold' }}>
               Remaining Purse: {purse.mavericks}
             </span>
@@ -321,7 +352,11 @@ function AuctionConsole({ user }) {
           >
             <span style={{ fontWeight: '700', flex: '1', fontSize: '36px' }}>
               VYMO TITANS
-                      </span>
+            </span>
+            <span style={{ fontWeight: '600', flex: '1', fontSize: '24px', color: 'white' }}>
+              {`Team Size: 
+              ${selectedPlayers('titans') + 2}`}
+            </span>
                       <span style={{ fontWeight: '500', flex: '1', fontSize: '24px', color: 'gold' }}>
               Remaining Purse: {purse.titans}
             </span>
