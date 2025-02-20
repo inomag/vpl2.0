@@ -135,42 +135,42 @@ function Admin({ user, status, purse , roster}) {
     }
   };
 
-  const handleResetAuction = async () => {
-    try {
-      // 1. Delete the player document from the currentBid collection
-      await deleteDoc(doc(db, 'currentBid', 'player'));
-      console.log('Deleted player document from currentBid.');
+  // const handleResetAuction = async () => {
+  //   try {
+  //     // 1. Delete the player document from the currentBid collection
+  //     await deleteDoc(doc(db, 'currentBid', 'player'));
+  //     console.log('Deleted player document from currentBid.');
 
-      // 2. Reset the purse document in the currentBid collection
-      await setDoc(doc(db, 'currentBid', 'purse'), {
-        mavericks: 1000,
-        strikers: 1000,
-        titans: 1000,
-        warriors: 1000,
-      });
-      console.log('Reset purse document in currentBid.');
+  //     // 2. Reset the purse document in the currentBid collection
+  //     await setDoc(doc(db, 'currentBid', 'purse'), {
+  //       mavericks: 1000,
+  //       strikers: 1000,
+  //       titans: 1000,
+  //       warriors: 1000,
+  //     });
+  //     console.log('Reset purse document in currentBid.');
 
-      // 3. Reset the status document in the currentBid collection
-      await setDoc(doc(db, 'currentBid', 'status'), {
-        mavericks: false,
-        strikers: false,
-        titans: false,
-        warriors: false,
-      });
-        console.log('Reset status document in currentBid.');
+  //     // 3. Reset the status document in the currentBid collection
+  //     await setDoc(doc(db, 'currentBid', 'status'), {
+  //       mavericks: false,
+  //       strikers: false,
+  //       titans: false,
+  //       warriors: false,
+  //     });
+  //       console.log('Reset status document in currentBid.');
         
-        const querySnapshot = await getDocs(collection(db, 'roster'));
+  //       const querySnapshot = await getDocs(collection(db, 'roster'));
 
-    const deletePromises = querySnapshot.docs.map((docSnapshot) =>
-      deleteDoc(doc(db, 'roster', docSnapshot.id))
-    );
+  //   const deletePromises = querySnapshot.docs.map((docSnapshot) =>
+  //     deleteDoc(doc(db, 'roster', docSnapshot.id))
+  //   );
 
-    await Promise.all(deletePromises);
-    console.log(`Deleted all documents from roster collection`);
-    } catch (error) {
-      console.error('Error resetting auction:', error);
-    }
-  };
+  //   await Promise.all(deletePromises);
+  //   console.log(`Deleted all documents from roster collection`);
+  //   } catch (error) {
+  //     console.error('Error resetting auction:', error);
+  //   }
+  // };
 
   const handleSell = async () => {
     try {
@@ -296,17 +296,16 @@ function Admin({ user, status, purse , roster}) {
             </Button>
           </Popconfirm>
         )}
-        <Popconfirm
+        {/* <Popconfirm
           title="Reset the auction"
           description="Are you sure to reset this auction?"
-          onConfirm={handleResetAuction}
           okText="Yes"
           cancelText="No"
         >
           <Button color="danger" variant="solid">
             Reset Auction
           </Button>
-        </Popconfirm>
+        </Popconfirm> */}
       </div>}
     </div>
   );
