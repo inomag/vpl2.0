@@ -164,7 +164,7 @@ function AuctionConsole({ user }) {
 
         <div
           style={{
-            height: '200px',
+            height: '280px',
             background: 'rgba(0, 0, 0, 0.88)',
             borderRadius: '16px',
             display: 'flex',
@@ -245,7 +245,7 @@ function AuctionConsole({ user }) {
       >
         <div
           style={{
-            height: '200px',
+            height: '280px',
             background: 'rgba(0, 0, 0, 0.88)',
             borderRadius: '16px',
             display: 'flex',
@@ -314,7 +314,7 @@ function AuctionConsole({ user }) {
 
         <div
           style={{
-            height: '200px',
+            height: '280px',
             background: 'rgba(0, 0, 0, 0.88)',
             borderRadius: '16px',
             display: 'flex',
